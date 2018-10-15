@@ -1,0 +1,16 @@
+{application, eapa,
+ [{description, "Erlang Arbitrary Precision Arithmetics"},
+  {vsn, git},
+  {registered, []},
+  {mod, { eapa_app, []}},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, ["MIT/GPL"]},
+  {links, []}
+ ]}.

@@ -1,0 +1,15 @@
+[package]
+name = "eapa"
+version = "0.1.0"
+authors = ["Maxim Molchanov <m.molchanov@vonmo.com>"]
+license = "MIT/GPL"
+
+[lib]
+name = "eapa"
+crate-type = ["dylib"]
+
+[dependencies]
+erlang_nif-sys = "=0.6.4"
+lazy_static = "=1.1.*"
+rustler = "=0.18.0"
+rug = "=1.2.1"

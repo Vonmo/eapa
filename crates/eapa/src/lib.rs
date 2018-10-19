@@ -151,11 +151,11 @@ fn bigint_gt<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
+    let mut r:bool = false;
     if x1int > x2int {
-        Ok((true).encode(env))
-    } else {
-        Ok((false).encode(env))
+        r = true;
     }
+    Ok((r).encode(env))
 }
 
 fn bigint_gte<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
@@ -165,11 +165,11 @@ fn bigint_gte<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
+    let mut r:bool = false;
     if x1int >= x2int {
-        Ok((true).encode(env))
-    } else {
-        Ok((false).encode(env))
+        r = true;
     }
+    Ok((r).encode(env))
 }
 
 fn bigint_lt<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
@@ -193,9 +193,9 @@ fn bigint_lte<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
+    let mut r:bool = false;
     if x1int <= x2int {
-        Ok((true).encode(env))
-    } else {
-        Ok((false).encode(env))
+        r = true;
     }
+    Ok((r).encode(env))
 }

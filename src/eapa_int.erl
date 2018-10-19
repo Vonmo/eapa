@@ -1,4 +1,4 @@
--module(eapa_money).
+-module(eapa_int).
 
 %% API
 -export([

@@ -1,4 +1,4 @@
--module(eapa_money_proper_SUITE).
+-module(eapa_int_proper_SUITE).
 -compile(export_all).
 -import(ct_helper, [config/2]).
 
@@ -6,12 +6,12 @@
 
 all() ->
   [
-    {group, money}
+    {group, int}
   ].
 
 groups() ->
   [
-    {money,
+    {int,
       [parallel, shuffle],
       [propers]}
   ].
@@ -36,7 +36,7 @@ end_per_group(_Group, _Config) ->
 
 
 %% =============================================================================
-%% group: money
+%% group: int
 %% =============================================================================
 propers(_) ->
   run_proper(module,
@@ -49,8 +49,8 @@ prop_enc_dec_small() ->
     begin
       Orig = integer_to_list(X1)++"."++string:left(integer_to_list(X2), P, $0),
       OrigBin = list_to_binary(Orig),
-      A = eapa_money:with_val(P, OrigBin),
-      OrigBin =:= eapa_money:to_float(P, A)
+      A = eapa_int:with_val(P, OrigBin),
+      OrigBin =:= eapa_int:to_float(P, A)
     end).
 
 prop_enc_dec_big() ->
@@ -62,8 +62,8 @@ prop_enc_dec_big() ->
     begin
       Orig = integer_to_list(X1)++"."++string:left(integer_to_list(X2), P, $0),
       OrigBin = list_to_binary(Orig),
-      A = eapa_money:with_val(P, OrigBin),
-      OrigBin =:= eapa_money:to_float(P, A)
+      A = eapa_int:with_val(P, OrigBin),
+      OrigBin =:= eapa_int:to_float(P, A)
     end).
 
 prop_enc_dec_huge() ->
@@ -75,8 +75,8 @@ prop_enc_dec_huge() ->
       %%      9223372036854775807
       Orig = "92233720368547758079223372036854775807."++string:left(integer_to_list(X1), P, $0),
       OrigBin = list_to_binary(Orig),
-      A = eapa_money:with_val(P, OrigBin),
-      OrigBin =:= eapa_money:to_float(P, A)
+      A = eapa_int:with_val(P, OrigBin),
+      OrigBin =:= eapa_int:to_float(P, A)
     end).
 
 run_proper(What, Fun) ->

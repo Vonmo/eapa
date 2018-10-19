@@ -86,4 +86,9 @@ apply_operation(<<Prec1:8/integer, _Val1/binary>> = X1, <<Prec2:8/integer, _Val2
 apply_operation(<<Prec1:8/integer, _Val1/binary>> = X1, <<Prec2:8/integer, _Val2/binary>> = X2, Fun) when Prec1 < Prec2 ->
   apply_operation(with_val(Prec2, to_float(X1)), X2, Fun);
 apply_operation(<<Prec:8/integer, Val1/binary>>, <<Prec:8/integer, Val2/binary>>, Fun) ->
-  <<Prec/integer, (Fun(Val1, Val2, Prec))/binary>>.
+  case Fun(Val1, Val2, Prec) of
+    X when is_binary(X)->
+      <<Prec/integer, (X)/binary>>;
+    X when is_boolean(X) ->
+      X
+  end.

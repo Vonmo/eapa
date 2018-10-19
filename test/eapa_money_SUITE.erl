@@ -20,6 +20,10 @@ groups() ->
         divp, divp_prec1, divp_prec2,
         min, min_prec1, min_prec2,
         max, max_prec1, max_prec2,
+        lt, lt_prec1, lt_prec2,
+        lte, lte_prec1, lte_prec2,
+        gt, gt_prec1, gt_prec2,
+        gte, gte_prec1, gte_prec2,
         big, big_negative]}
   ].
 
@@ -175,6 +179,90 @@ max_prec2(_) ->
   X2 = eapa_money:with_val(12, <<"0.000123">>),
   R = eapa_money:max(X1, X2),
   <<"0.055550">> = eapa_money:to_float(6, R),
+  ok.
+
+lt(_) ->
+  X1 = eapa_money:with_val(6, <<"0.05555">>),
+  X2 = eapa_money:with_val(6, <<"0.000123">>),
+  false = eapa_money:lt(X1, X2),
+  true = eapa_money:lt(X2, X1),
+  ok.
+
+lt_prec1(_) ->
+  X1 = eapa_money:with_val(12, <<"0.05555">>),
+  X2 = eapa_money:with_val(6, <<"0.000123">>),
+  false = eapa_money:lt(X1, X2),
+  true = eapa_money:lt(X2, X1),
+  ok.
+
+lt_prec2(_) ->
+  X1 = eapa_money:with_val(6, <<"0.05555">>),
+  X2 = eapa_money:with_val(12, <<"0.000123">>),
+  false = eapa_money:lt(X1, X2),
+  true = eapa_money:lt(X2, X1),
+  ok.
+
+lte(_) ->
+  X1 = eapa_money:with_val(6, <<"0.05555">>),
+  X2 = eapa_money:with_val(6, <<"0.000123">>),
+  false = eapa_money:lte(X1, X2),
+  true = eapa_money:lte(X2, X1),
+  ok.
+
+lte_prec1(_) ->
+  X1 = eapa_money:with_val(12, <<"0.05555">>),
+  X2 = eapa_money:with_val(6, <<"0.000123">>),
+  false = eapa_money:lte(X1, X2),
+  true = eapa_money:lte(X2, X1),
+  ok.
+
+lte_prec2(_) ->
+  X1 = eapa_money:with_val(6, <<"0.05555">>),
+  X2 = eapa_money:with_val(12, <<"0.000123">>),
+  false = eapa_money:lte(X1, X2),
+  true = eapa_money:lte(X2, X1),
+  ok.
+
+gt(_) ->
+  X1 = eapa_money:with_val(6, <<"0.05555">>),
+  X2 = eapa_money:with_val(6, <<"0.000123">>),
+  true = eapa_money:gt(X1, X2),
+  false = eapa_money:gt(X2, X1),
+  ok.
+
+gt_prec1(_) ->
+  X1 = eapa_money:with_val(12, <<"0.05555">>),
+  X2 = eapa_money:with_val(6, <<"0.000123">>),
+  true = eapa_money:gt(X1, X2),
+  false = eapa_money:gt(X2, X1),
+  ok.
+
+gt_prec2(_) ->
+  X1 = eapa_money:with_val(6, <<"0.05555">>),
+  X2 = eapa_money:with_val(12, <<"0.000123">>),
+  true = eapa_money:gt(X1, X2),
+  false = eapa_money:gt(X2, X1),
+  ok.
+
+gte(_) ->
+  X1 = eapa_money:with_val(6, <<"0.05555">>),
+  X2 = eapa_money:with_val(6, <<"0.000123">>),
+  true = eapa_money:gte(X1, X2),
+  false = eapa_money:gte(X2, X1),
+  ok.
+
+gte_prec1(_) ->
+  X1 = eapa_money:with_val(12, <<"0.05555">>),
+  X2 = eapa_money:with_val(6, <<"0.000123">>),
+  true = eapa_money:gte(X1, X2),
+  false = eapa_money:gte(X2, X1),
+  ok.
+
+gte_prec2(_) ->
+  X1 = eapa_money:with_val(6, <<"0.05555">>),
+  X2 = eapa_money:with_val(12, <<"0.000123">>),
+  true = eapa_money:gte(X1, X2),
+  false = eapa_money:gte(X2, X1),
   ok.
 
 big(_) ->

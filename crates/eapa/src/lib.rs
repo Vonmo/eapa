@@ -15,8 +15,6 @@ mod atoms {
     rustler_atoms! {
         atom ok;
         atom err;
-        atom yes;
-        atom no;
         atom vn1;
     }
 }
@@ -154,9 +152,9 @@ fn bigint_gt<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
     if x1int > x2int {
-        Ok((atoms::yes()).encode(env))
+        Ok((true).encode(env))
     } else {
-        Ok((atoms::no()).encode(env))
+        Ok((false).encode(env))
     }
 }
 
@@ -168,9 +166,9 @@ fn bigint_gte<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
     if x1int >= x2int {
-        Ok((atoms::yes()).encode(env))
+        Ok((true).encode(env))
     } else {
-        Ok((atoms::no()).encode(env))
+        Ok((false).encode(env))
     }
 }
 
@@ -181,11 +179,11 @@ fn bigint_lt<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
+    let mut r:bool = false;
     if x1int < x2int {
-        Ok((atoms::yes()).encode(env))
-    } else {
-        Ok((atoms::no()).encode(env))
+        r = true;
     }
+    Ok((r).encode(env))
 }
 
 fn bigint_lte<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
@@ -196,8 +194,8 @@ fn bigint_lte<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
     if x1int <= x2int {
-        Ok((atoms::yes()).encode(env))
+        Ok((true).encode(env))
     } else {
-        Ok((atoms::no()).encode(env))
+        Ok((false).encode(env))
     }
 }

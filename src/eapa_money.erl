@@ -25,24 +25,26 @@ with_val(Prec, Val) when is_integer(Prec), Prec < 127 ->
   with_val(Prec, ValBin).
 
 to_float(Prec, <<VPrec:8/integer, Val/binary>>) when is_integer(Prec), Prec > 0, Prec < 127, is_binary(Val) ->
-  iolist_to_binary(case binary:split(eapa:bigint_to_float(Val, VPrec), <<".">>) of
-                     [H | [T | _]] ->
-                       case byte_size(T) of
-                         X when X >= Prec ->
-                           <<V:Prec/binary, _/binary>> = T,
-                           [H, $., V];
-                         Y ->
-                           <<V:Y/binary, _/binary>> = T,
-                           [H, $., V, [$0 || _ <- lists:seq(1, Prec - Y)]]
-                       end;
-                     [H] ->
-                       [H, $., [$0 || _ <- lists:seq(1, Prec)]]
+  A = binary_to_list(eapa:bigint_to_str(Val, VPrec)),
+  {H, T} = case length(A) > VPrec of
+    true ->
+      {Hs, Ts} = lists:split(length(A) - VPrec, A),
+      {list_to_binary(Hs), list_to_binary(Ts)};
+    false ->
+      {<<"0">>, iolist_to_binary([[$0 || _ <- lists:seq(1, VPrec - length(A))], A])}
+  end,
+  iolist_to_binary(case byte_size(T) of
+                     X when X >= Prec ->
+                       <<V:Prec/binary, _/binary>> = T,
+                       [H, $., V];
+                     Y ->
+                       <<V:Y/binary, _/binary>> = T,
+                       [H, $., V, [$0 || _ <- lists:seq(1, Prec - Y)]]
                    end);
 to_float(Prec, <<VPrec:8/integer, Val/binary>>) when is_integer(Prec), Prec =:= 0 ->
-  iolist_to_binary(case binary:split(eapa:bigint_to_float(Val, VPrec), <<".">>) of
-                     [H | _] ->
-                       H
-                   end).
+  A = binary_to_list(eapa:bigint_to_str(Val, VPrec)),
+  {Hs, _Ts} = lists:split(length(A) - VPrec, A),
+  list_to_binary(Hs).
 
 to_float(<<VPrec:8/integer, _Val/binary>> = X) ->
   to_float(VPrec, X).

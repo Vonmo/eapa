@@ -4,7 +4,7 @@
 -export([
   lxcode/0,
   float_to_bigint/2,
-  bigint_to_float/2,
+  bigint_to_str/2,
   bigint_add/2,
   bigint_sub/2,
   bigint_mul/3,
@@ -27,7 +27,7 @@ lxcode() ->
 float_to_bigint(_FloatVal, _Prec) ->
   not_loaded(?LINE).
 
-bigint_to_float(_IntVal, _Prec) ->
+bigint_to_str(_IntVal, _Prec) ->
   not_loaded(?LINE).
 
 bigint_add(_Val1, _Val2) ->

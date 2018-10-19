@@ -28,7 +28,7 @@ rustler_export_nifs!(
     [
         ("lxcode", 0, lxcode), // library version code
         ("float_to_bigint", 2, float_to_bigint), //float to bigint
-        ("bigint_to_float", 2, bigint_to_float), //bigint to float
+        ("bigint_to_str", 2, bigint_to_str), //bigint to string
         ("bigint_add", 2, bigint_add), //bigint + bigint
         ("bigint_sub", 2, bigint_sub), //bigint - bigint
         ("bigint_mul", 3, bigint_mul), //bigint * bigint
@@ -56,7 +56,7 @@ fn float_to_bigint<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let p: u32 = args[1].decode()?;
 
     let valid = Float::parse(src);
-    let f: Float = Float::with_val(128, valid.unwrap());
+    let f: Float = Float::with_val(p*8*2, valid.unwrap());
 
     let base: Integer = Integer::from(10);
     let res: Float = base.pow(p) * f;
@@ -69,20 +69,11 @@ fn float_to_bigint<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     }
 }
 
-fn bigint_to_float<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+fn bigint_to_str<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let src: String = args[0].decode()?;
     let p: u32 = args[1].decode()?;
-
-    let valid = Float::parse("1.0");
-    let t: Float = Float::with_val(128, valid.unwrap());
-
-    let i = Integer::from_str_radix(src.to_string().as_str(), RADIX_BASE).unwrap() * t;
-    let base: Integer = Integer::from(10);
-    let res: Float = i / base.pow(p);
-
-    let r: f64 = res.to_string().parse().unwrap();
-
-    Ok((format!("{}", r)).encode(env))
+    let i = Integer::from_str_radix(src.to_string().as_str(), RADIX_BASE).unwrap();
+    Ok((format!("{}", i)).encode(env))
 }
 
 fn bigint_add<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {

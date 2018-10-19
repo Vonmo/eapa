@@ -19,7 +19,8 @@ groups() ->
         mul, mul_prec1, mul_prec2,
         divp, divp_prec1, divp_prec2,
         min, min_prec1, min_prec2,
-        max, max_prec1, max_prec2]}
+        max, max_prec1, max_prec2,
+        big, big_negative]}
   ].
 
 
@@ -175,3 +176,13 @@ max_prec2(_) ->
   R = eapa_money:max(X1, X2),
   <<"0.055550">> = eapa_money:to_float(6, R),
   ok.
+
+big(_) ->
+  X = <<"2147483648.2147483647">>,
+  C = eapa_money:with_val(10, X),
+  X = eapa_money:to_float(C).
+
+big_negative(_) ->
+  X = <<"-2147483648.2147483647">>,
+  C = eapa_money:with_val(10, X),
+  X = eapa_money:to_float(C).

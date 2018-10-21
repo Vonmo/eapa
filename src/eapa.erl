@@ -14,7 +14,8 @@
   bigint_lt/2,
   bigint_lte/2,
   bigint_gt/2,
-  bigint_gte/2
+  bigint_gte/2,
+  bigint_eq/2
 ]).
 
 %% Native library support
@@ -58,6 +59,9 @@ bigint_gt(_Val1, _Val2) ->
   not_loaded(?LINE).
 
 bigint_gte(_Val1, _Val2) ->
+  not_loaded(?LINE).
+
+bigint_eq(_Val1, _Val2) ->
   not_loaded(?LINE).
 
 load() ->

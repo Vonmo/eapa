@@ -22,19 +22,20 @@ mod atoms {
 rustler_export_nifs!(
     "eapa",
     [
-        ("lxcode", 0, lxcode), // library version code
+        ("lxcode",          0, lxcode),          //library version code
         ("float_to_bigint", 2, float_to_bigint), //float to bigint
-        ("bigint_to_str", 1, bigint_to_str), //bigint to string
-        ("bigint_add", 2, bigint_add), //bigint + bigint
-        ("bigint_sub", 2, bigint_sub), //bigint - bigint
-        ("bigint_mul", 3, bigint_mul), //bigint * bigint
-        ("bigint_div", 3, bigint_div), //bigint / bigint
-        ("bigint_min", 2, bigint_min), //min(bigint, bigint)
-        ("bigint_max", 2, bigint_max), //min(bigint, bigint)
-        ("bigint_lt",  2, bigint_lt),  //bigint < bigint
-        ("bigint_lte", 2, bigint_lte), //bigint =< bigint
-        ("bigint_gt",  2, bigint_gt),  //bigint > bigint
-        ("bigint_gte", 2, bigint_gte), //bigint >= bigint
+        ("bigint_to_str",   1, bigint_to_str),   //bigint to string
+        ("bigint_add",      2, bigint_add),      //bigint + bigint
+        ("bigint_sub",      2, bigint_sub),      //bigint - bigint
+        ("bigint_mul",      3, bigint_mul),      //bigint * bigint
+        ("bigint_div",      3, bigint_div),      //bigint / bigint
+        ("bigint_min",      2, bigint_min),      //min(bigint, bigint)
+        ("bigint_max",      2, bigint_max),      //min(bigint, bigint)
+        ("bigint_lt",       2, bigint_lt),       //bigint < bigint
+        ("bigint_lte",      2, bigint_lte),      //bigint =< bigint
+        ("bigint_gt",       2, bigint_gt),       //bigint > bigint
+        ("bigint_gte",      2, bigint_gte),      //bigint >= bigint
+        ("bigint_eq",       2, bigint_eq),       //bigint =:= bigint
     ],
     Some(on_load)
 );
@@ -52,7 +53,7 @@ fn float_to_bigint<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let p: u32 = args[1].decode()?;
 
     let valid = Float::parse(src);
-    let f: Float = Float::with_val(p * 8 * 2, valid.unwrap());
+    let f: Float = Float::with_val(p * 8 * 8, valid.unwrap());
 
     let base: Integer = Integer::from(10);
     let res: Float = base.pow(p) * f;
@@ -151,7 +152,7 @@ fn bigint_gt<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
-    let mut r:bool = false;
+    let mut r: bool = false;
     if x1int > x2int {
         r = true;
     }
@@ -165,7 +166,7 @@ fn bigint_gte<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
-    let mut r:bool = false;
+    let mut r: bool = false;
     if x1int >= x2int {
         r = true;
     }
@@ -179,7 +180,7 @@ fn bigint_lt<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
-    let mut r:bool = false;
+    let mut r: bool = false;
     if x1int < x2int {
         r = true;
     }
@@ -193,8 +194,22 @@ fn bigint_lte<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
     let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
 
-    let mut r:bool = false;
+    let mut r: bool = false;
     if x1int <= x2int {
+        r = true;
+    }
+    Ok((r).encode(env))
+}
+
+fn bigint_eq<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    let x1: String = args[0].decode()?;
+    let x2: String = args[1].decode()?;
+
+    let x1int = Integer::from_str_radix(x1.to_string().as_str(), RADIX_BASE).unwrap();
+    let x2int = Integer::from_str_radix(x2.to_string().as_str(), RADIX_BASE).unwrap();
+
+    let mut r: bool = false;
+    if x1int == x2int {
         r = true;
     }
     Ok((r).encode(env))

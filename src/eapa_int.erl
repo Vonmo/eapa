@@ -14,7 +14,8 @@
   lt/2,
   lte/2,
   gt/2,
-  gte/2
+  gte/2,
+  eq/2
 ]).
 
 with_val(Prec, Val) when is_integer(Prec), Prec < 127, is_binary(Val) ->
@@ -78,6 +79,9 @@ gt(X1, X2) ->
 gte(X1, X2) ->
   apply_operation(X1, X2, fun(Val1, Val2, _Prec) -> eapa:bigint_gte(Val1, Val2) end).
 
+eq(X1, X2) ->
+  apply_operation(X1, X2, fun(Val1, Val2, _Prec) -> eapa:bigint_eq(Val1, Val2) end).
+
 %% =====================================================================================================================
 %% helpers
 %% =====================================================================================================================
@@ -87,7 +91,7 @@ apply_operation(<<Prec1:8/integer, _Val1/binary>> = X1, <<Prec2:8/integer, _Val2
   apply_operation(with_val(Prec2, to_float(X1)), X2, Fun);
 apply_operation(<<Prec:8/integer, Val1/binary>>, <<Prec:8/integer, Val2/binary>>, Fun) ->
   case Fun(Val1, Val2, Prec) of
-    X when is_binary(X)->
+    X when is_binary(X) ->
       <<Prec/integer, (X)/binary>>;
     X when is_boolean(X) ->
       X

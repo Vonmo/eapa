@@ -1,5 +1,5 @@
 # eapa
-Erlang Arbitrary Precision Arithmetics
+Erlang/Elixir Arbitrary Precision Arithmetics
 
 **release:**
 `rebar3 as prod release`

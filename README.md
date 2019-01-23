@@ -11,14 +11,14 @@ Erlang/Elixir Arbitrary Precision Arithmetic
 **rebar deps for external projects:**
 ```
 {deps, [
-  {eapa, "", {git, "https://github.com/Vonmo/eapa.git", {tag, "v0.1.1"}}}
+  {eapa, "", {git, "https://github.com/Vonmo/eapa.git", {tag, "v0.1.2"}}}
 ]}.  
 ```
 **mix deps (Elixir):**
 ```
 defp deps do
  [
-   {:rocker, git: "https://github.com/Vonmo/rocker.git", tag: "v5.14.2_3"}      
+   {:eapa, git: "https://github.com/Vonmo/eapa.git", tag: "v0.1.2"}      
  ]
 end
 ```

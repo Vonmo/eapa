@@ -7,6 +7,15 @@ Erlang/Elixir Arbitrary Precision Arithmetic
   {eapa, "", {git, "https://github.com/Vonmo/eapa.git", {tag, "v0.1.1"}}}
 ]}.  
 ```
+## mix deps (Elixir)
+```
+defp deps do
+ [
+   {:rocker, git: "https://github.com/Vonmo/rocker.git", tag: "v5.14.2_3"}      
+ ]
+end
+```
+
 
 **release:**
 `make up && make rel` or `rebar3 as prod release`

@@ -1,13 +1,20 @@
 # eapa
 Erlang/Elixir Arbitrary Precision Arithmetic
 
+**release:**
+`make up && make rel` or `rebar3 as prod release`
+
+**test:**
+`make tests` or `rebar3 as test ct`
+
+
 **rebar deps for external projects:**
 ```
 {deps, [
   {eapa, "", {git, "https://github.com/Vonmo/eapa.git", {tag, "v0.1.1"}}}
 ]}.  
 ```
-## mix deps (Elixir)
+**mix deps (Elixir):**
 ```
 defp deps do
  [
@@ -15,14 +22,6 @@ defp deps do
  ]
 end
 ```
-
-
-**release:**
-`make up && make rel` or `rebar3 as prod release`
-
-**test:**
-`make tests` or `rebar3 as test ct`
-
 ## Introduction
 
 Most of modern microprocessors are made with a hardware implementation of real number representation in IEEE754. The number length is limited by the format, and rounding modes influence precision. Programmers are often unable to change the behaviour of equipment, or languages implementation. For example, the official implementation of Erlang stores float in 3 words on a 64-bit machine and in 4 words on a 32-bit one.

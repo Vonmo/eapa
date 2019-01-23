@@ -1,11 +1,18 @@
 # eapa
 Erlang/Elixir Arbitrary Precision Arithmetic
 
+**rebar deps for external projects:**
+```
+{deps, [
+  {eapa, "", {git, "https://github.com/Vonmo/eapa.git", {tag, "v0.1.1"}}}
+]}.  
+```
+
 **release:**
-`rebar3 as prod release`
+`make up && make rel` or `rebar3 as prod release`
 
 **test:**
-`rebar3 as test ct`
+`make tests` or `rebar3 as test ct`
 
 ## Introduction
 

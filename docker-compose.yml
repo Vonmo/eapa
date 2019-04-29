@@ -2,14 +2,19 @@ version: '3.2'
 services:
 
   base:
-    build: imgs/base
+    build:
+      context: imgs/base
+      args:
+        UID: "${UID:?Please export UID}"
+        GID: "${GID:?Please export GID}"
 
   test:
     image: eapa_base:latest
+    user: "${UID:?Please export UID}:${GID:?Please export GID}"
     depends_on:
       - base
     volumes:
-      - "./:/project:Z"
+      - "./:/project"
     tmpfs:
       - /run
       - /tmp

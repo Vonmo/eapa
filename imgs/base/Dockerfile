@@ -1,5 +1,5 @@
-FROM erlang:21.3.6 AS erlang
-FROM rust:1.34.0 AS rust
+FROM erlang:21.0 AS erlang
+FROM rust:1.38.0 AS rust
 
 FROM debian:9.4
 

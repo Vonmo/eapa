@@ -1,7 +1,7 @@
-FROM erlang:21.0 AS erlang
-FROM rust:1.38.0 AS rust
+FROM erlang:22.2 AS erlang
+FROM rust:1.40.0 AS rust
 
-FROM debian:9.4
+FROM debian:10.2
 
 LABEL author="Maxim Molchanov"
 LABEL maintainer="m.molchanov@vonmo.com"
@@ -32,6 +32,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     apt-transport-https \
+    ca-certificates \
     wget \
     curl \
     build-essential \
@@ -61,6 +62,9 @@ RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
 RUN locale-gen en_US.UTF-8
+
+ADD ./soft/rebar3 /usr/local/bin/rebar3
+RUN chmod a+rwx /usr/local/bin/rebar3
 
 USER eapa
 

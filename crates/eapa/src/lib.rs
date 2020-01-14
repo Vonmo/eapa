@@ -1,4 +1,3 @@
-#[macro_use]
 extern crate lazy_static;
 extern crate rug;
 #[macro_use]
